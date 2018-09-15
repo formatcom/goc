@@ -1,6 +1,6 @@
 #include "libfoo.h"
 
 int main(){
-	Step();
+	Show();
 	return 0;
 }

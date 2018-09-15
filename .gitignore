@@ -1,4 +1,7 @@
 _obj
 goc
 goc-static
-libfoo.*
+*.o
+*.h
+*.a
+*.so
