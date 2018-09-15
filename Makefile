@@ -9,8 +9,18 @@ TARGET=$(shell basename $(PWD))
 CC=gcc
 
 # compiler flags:
-#  -g    adds debugging information to the executable file
-#  -Wall turns on most, but not all, compiler warnings
+#  [-g]               adds debugging information to the executable file
+#  [-Wall]            turns on most, but not all, compiler warnings
+#  [-m64]             Generate code for 64-bit
+#  [-fmessage-length] Try to format error messages so that
+#                     they fit on lines of about n characters.
+#                     If n is zero, then no line-wrapping is done;
+#                     each error message appears on a single line.
+#                     This is the default for all front ends.
+#  [-g]               Produce debugging information in the operating system's native format
+#  [-Olevel]          With -O, the compiler tries to reduce code size and execution time,
+#                     without performing any optimizations that take a great deal of
+#                     compilation time.
 CFLAGS=-fPIC -m64 -fmessage-length=0 -g -O2 -Wall
 
 # define any directories containing header files
@@ -34,6 +44,9 @@ SRCS=main.c
 # with the .o suffix
 OBJS = $(SRCS:.c=.o)
 
+# 'make' will not expect file to be created for the dependencies
+.PHONY: all clean
+
 all: $(TARGET) $(TARGET)-static
 
 $(TARGET): libfoo.so $(OBJS)
@@ -56,8 +69,6 @@ libfoo.so:
 
 libfoo.a:
 	CC=$(CC) go build -buildmode=c-archive -o $@ foo/foo.go
-
-.PHONY: clean
 
 clean:
 	rm -rf $(TARGET) $(TARGET)-static \
